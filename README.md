@@ -1,19 +1,16 @@
-# WeatherWise
+# WeatherApp-2.0
 
-## Overview
-WeatherWise is a user-friendly weather application built with Node.js and various modern technologies. Our goal is to provide real-time weather information and forecasts to help users plan their day with confidence.
+This is Weather App v2.0, a creation in which I remade it with React (With a bit of ChatGPT's guidance)
 
-## Features
-- Current weather updates
-- 5-day weather forecasts
-- Location-based services
-- Interactive and responsive design
+=====================================================================================================================================
 
-## Technologies Used
-- **Node.js**: Backend server
-- **Express**: Web framework for building the API
-- **Axios**: For making API requests
-- **React**: Frontend library for building the user interface
-- **OpenWeatherMap API**: Source for weather data
+Some key things to note:
 
+- Background image still needs work and maybe a new one with much higher resolution
+- Features such as little photos that show the weather conditions will be added in future patches
+- A map that display the location being search to see the weather
 
+** FEATURES **
+
+- A simple UI that lets user do a search on a location's weather of their choosing 
+- Their searches are then saved to a local database which can be access by using MongoDB
