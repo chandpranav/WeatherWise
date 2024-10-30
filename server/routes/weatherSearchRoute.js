@@ -1,13 +1,13 @@
 import { Router } from "express";
 import {
   getSearches,
-  saveSearch,
+  getWeather,
 } from "../controller/weatherSearch.controller.js"; // Import controller functions
 
 const weatherSearchRoute = Router();
 
 // Define all the routes for user-related operations
-weatherSearchRoute.get('/api/searches', getSearches); // get saved searches
-weatherSearchRoute.post('/api/search', saveSearch); // save the search
+weatherSearchRoute.get('/api/searches', getSearches); // Get saved searches
+weatherSearchRoute.get('/api/getweather', getWeather); // Fetch weather
 
 export default weatherSearchRoute;
