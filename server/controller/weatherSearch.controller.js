@@ -18,23 +18,6 @@ export const getSearches = async (req, res) => {
     }
 };
 
-// Save a new search
-export const saveSearch = async (req, res) => {
-    try {
-        const { location } = req.body;
-        console.log('Location received:', location); // Log to check data being received
-        
-        const newSearch = new Search({ location });
-        await newSearch.save(); // Save the new search to the database
-        
-        console.log('Search saved to database');
-        res.status(201).json({ message: 'Search saved!' });
-    } catch (err) {
-        console.error('Failed to save search:', err);
-        res.status(500).json({ error: 'Failed to save search' });
-    }
-};
-
 // Get the weather
 export const getWeather = async (req, res) => {
     const query = req.query.location;
@@ -46,9 +29,14 @@ export const getWeather = async (req, res) => {
     try {
         const weatherData = await fetchWeatherData(query);
 
-        saveSearchToDatabase(query).catch(err => {
-            console.error("Error saving search to database:", err)
-        })
+        saveSearchToDatabase(
+            query, 
+            Math.round(weatherData.temperatureC),
+            Math.round(weatherData.temperatureF),
+            weatherData.description
+        ).catch(err => {
+            console.error('Error saving search to database:', err);
+        });
 
         res.json(weatherData);
     } catch (error) {

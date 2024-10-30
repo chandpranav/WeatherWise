@@ -3,7 +3,10 @@ import { Schema, model } from "mongoose";
 // Define the search schema and model
 const SearchSchema = new Schema({
     location: { type: String, required: true },
-    timestamp: { type: Date, default: Date.now }
+    timestamp: { type: Date, default: Date.now },
+    temperatureC: { type: Number, required: true }, 
+    temperatureF: { type: Number, required: true }, 
+    description: { type: String}
 });
 
 const Search = model("Search", SearchSchema);
