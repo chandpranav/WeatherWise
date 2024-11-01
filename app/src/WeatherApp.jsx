@@ -63,7 +63,7 @@ function WeatherApp() {
 
   return (
     <div className="container">
-      <h1>Weather App</h1>
+      <h1>WeatherWise</h1>
       <input
         type="text"
         id="locationInput"
