@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const FavoriteSchema = new Schema({
-    user: { type: String, required: true }, // User identifier, required
+    user: { type: String, required: true },
     favoriteLocations: {
         type: [String], 
         validate: [arrayLimit, '{PATH} exceeds the limit of 3']
