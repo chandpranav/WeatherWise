@@ -1,21 +1,15 @@
 import Search from "../model/search.js";
 import { fetchWeatherData } from "../services/weatherAPI.service.js";
 import { saveSearchToDatabase } from "../services/savesearch.service.js";
+import { getUserHistory } from "../services/getuserhistory.service.js";
 
 // Get the last 10 searches
-export const getSearches = async (req, res) => {
-    try {
-        const searches = await Search.find()
-            .sort({ timestamp: -1 }) // Sort by most recent
-            .limit(10); // Get the last 10 searches
-        res.status(200).json(searches);
-    } catch (err) {
-        console.error('Failed to fetch searches:', err);
-        res.status(500).json({
-            status: "Fail",
-            message: "Failed to get searches."
-        });
-    }
+export const getHistory = async (req, res) => {
+    const user = req.query.user;
+
+    const history = await getUserHistory(user);
+    console.log(`History for ${user} fetched: `, history);
+    res.json(history);
 };
 
 // Get the weather
