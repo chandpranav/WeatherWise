@@ -1,10 +1,12 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './style.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { UserProvider } from './UserContext'; // Import UserProvider
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+// Adding UserProvider to access the user across the app. Unecessary but fun.
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <UserProvider>
     <App />
-  </StrictMode>,
-)
+  </UserProvider>
+);

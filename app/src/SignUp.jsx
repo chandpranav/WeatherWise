@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useUser } from './UserContext'; // Import the custom hook
 import './style.css';
 
 const cities = ['Los Angeles', 'Moscow', 'London', 'Hanoi', 'Beijing', 'Seoul', 'Osaka', 'Tokyo', 'Kyoto', 'Sydney', 'New York', 'Singapore'];
+const user = "guest"; // Testing variable
+
 
 function WeatherApp() {
-  const { user } = useUser(); // Access user
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState('');
-
+  
   const fetchWeather = async (city) => {
     const query = city || location;
 
@@ -19,7 +19,7 @@ function WeatherApp() {
     }
 
     // Call the backend instead of the OpenWeather API directly
-    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${user ? user.name : "guest"}`;
+    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${user}`;
 
     try {
       const response = await fetch(url);
@@ -41,6 +41,7 @@ function WeatherApp() {
       setError('Error fetching weather data. Please try again later.');
     }
   };
+
 
   // Reset weather data
   const resetWeather = () => {
