@@ -21,6 +21,7 @@ export const getSearches = async (req, res) => {
 // Get the weather
 export const getWeather = async (req, res) => {
     const query = req.query.location;
+    const user = req.query.user;
     
     if (!query) {
         return res.status(400).json({ error: 'Enter a valid city or location.' });
@@ -30,6 +31,7 @@ export const getWeather = async (req, res) => {
         const weatherData = await fetchWeatherData(query);
 
         saveSearchToDatabase(
+            user,
             query, 
             Math.round(weatherData.temperatureC),
             Math.round(weatherData.temperatureF),

@@ -1,8 +1,8 @@
 import Search from '../model/search.js';
 
-export async function saveSearchToDatabase(location, temperatureC, temperatureF, description) {
+export async function saveSearchToDatabase(user, location, temperatureC, temperatureF, description) {
     try {
-        const search = new Search({ location, temperatureC, temperatureF, description });
+        const search = new Search({user, location, temperatureC, temperatureF, description });
         await search.save();
         console.log('Search saved:', search);
         return { message: "Search saved!"};

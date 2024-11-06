@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 
 const cities = ['Los Angeles', 'Moscow', 'London', 'Hanoi', 'Beijing', 'Seoul', 'Osaka', 'Tokyo', 'Kyoto', 'Sydney', 'New York', 'Singapore'];
+const user = "Diego"
 
 function WeatherApp() {
   const [location, setLocation] = useState('');
@@ -17,7 +18,7 @@ function WeatherApp() {
     }
 
     // Call the backend instead of the OpenWeather API directly
-    const url = `http://localhost:5001/weather/api/getweather?location=${query}`;
+    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${user}`;
 
     try {
       const response = await fetch(url);
