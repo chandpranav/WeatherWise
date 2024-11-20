@@ -1,49 +1,47 @@
-/*import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 
 const cities = ['Los Angeles', 'Moscow', 'London', 'Hanoi', 'Beijing', 'Seoul', 'Osaka', 'Tokyo', 'Kyoto', 'Sydney', 'New York', 'Singapore'];
+const user = "guest"; // Testing variable
+
 
 function WeatherApp() {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState('');
-
-
   
-  // Fetch weather data
-  const fetchWeather = (city) => {
-    const query = city || location;  // Use city if passed, otherwise use location state
-    
+  const fetchWeather = async (city) => {
+    const query = city || location;
+
     if (!query) {
-      setError('Please enter a city name');
+      setError('Please enter a valid location');
       return;
     }
 
-    const url = `http://localhost:5001/api/weather?city=${query}`;
+    // Call the backend instead of the OpenWeather API directly
+    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${user}`;
 
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data.cod === 200) {
-          const celsius = data.main.temp;
-          const fahrenheit = (celsius * 9 / 5) + 32;
-          setWeatherData({
-            name: data.name,
-            temperature: `${Math.round(celsius)}°C / ${Math.round(fahrenheit)}°F`,
-            description: data.weather[0].description,
-          });
-          setError(''); // Clear any previous error
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
 
-          // Save the search to the database
-          saveSearchToDatabase(data.name);
-        } else {
-          setError('City not found. Please try again.');
-        }
-      })
-      .catch(() => {
-        setError('Error fetching weather data. Please try again later.');
-      });
+      if (data.error) {
+        setError(data.error); // Print the error sent by the backend
+      } else {
+        const celsius = data.temperatureC;
+        const fahrenheit = data.temperatureF;
+        setWeatherData({
+          name: data.name,
+          temperature: `${Math.round(celsius)}°C / ${Math.round(fahrenheit)}°F`,
+          description: data.description,
+        });
+        setError(''); // Clear any previous error
+      }
+    } catch (error) {
+      setError('Error fetching weather data. Please try again later.');
+    }
   };
+
 
   // Reset weather data
   const resetWeather = () => {
@@ -65,22 +63,9 @@ function WeatherApp() {
     fetchWeather(randomCity);
   };
 
-  const saveSearchToDatabase = (location) => {
-    fetch('http://localhost:5001/weather/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ location }),
-    })
-      .then(response => response.json())
-      .then(data => console.log('Search saved:', data))
-      .catch(error => console.error('Error saving search:', error));
-  };
-
   return (
     <div className="container">
-      <h1>Weather App</h1>
+      <h1>WeatherWise</h1>
       <input
         type="text"
         id="locationInput"
@@ -104,4 +89,4 @@ function WeatherApp() {
   );
 }
 
-export default WeatherApp;*/
+export default WeatherApp;

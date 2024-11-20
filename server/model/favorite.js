@@ -12,6 +12,6 @@ function arrayLimit(val) {
     return val.length <= 3;
 }
 
-const Favorite = model("Search", FavoriteSchema);
+const Favorite = model("Favorite", FavoriteSchema);
 
 export default Favorite;

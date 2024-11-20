@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import { setupCors } from './middleware/cors.middleware.js';
 import weatherSearchRoute from "./routes/weatherSearchRoute.js";
 
+import dotenv from 'dotenv';
+
 // Initialize express app
 const app = express();
 app.use(express.json());
@@ -12,8 +14,11 @@ app.use(express.json());
 // Global Middleware
 setupCors(app);
 
+// Access env variables
+dotenv.config();
+
 // MongoDB connection
-const mongoURL = 'mongodb://localhost:27017';
+const mongoURL = process.env.MONGODB_URL;
 const mongoConnect = async () => {
     try {
       await mongoose.connect(mongoURL); 
