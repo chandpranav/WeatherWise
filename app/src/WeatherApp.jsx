@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useUser } from './UserContext'; // Import the custom hook
-import './style.css';
+import './styles/style.css';
 
 const cities = ['Los Angeles', 'Moscow', 'London', 'Hanoi', 'Beijing', 'Seoul', 'Osaka', 'Tokyo', 'Kyoto', 'Sydney', 'New York', 'Singapore'];
 

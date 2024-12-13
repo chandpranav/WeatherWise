@@ -1,10 +1,11 @@
 body {
     font-family: Helvetica;
     background-color: #d6eae7;
-    background-image: url("./Assets/IMG_2271.jpeg");
-    background-size: 135%; /* Makes the background cover the entire element */
-    background-repeat: no-repeat; /* Prevents the background from repeating */
-    background-position: center; /* Centers the background image */
+    background-image: url("../assets/IMG_2271.jpeg");
+    background-size: fill;
+    background-repeat: no-repeat; 
+    background-position: center; 
+    height: 100%;
     
 }
 .container{
@@ -18,6 +19,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin-top: 105px;
 }
+
 h1 {
     font-size: 30px;
     background: linear-gradient(90deg, #318be6, #b873f0); /* Define the gradient colors */
@@ -26,6 +28,7 @@ h1 {
     background-clip: text; 
     color: transparent; 
 }
+
 input[type="text"] {
     width: calc(100% - 22px); /* Adjusted width */
     padding: 10px;
@@ -34,6 +37,7 @@ input[type="text"] {
     border-radius: 5px;
     display: block; /* Ensures the input takes the full width */
 }
+
 button {
     background-color: #0039f3;
     color: #fff;
@@ -42,13 +46,16 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
 button:hover {
     background-color: #689ed7;
 }
+
 .errorMessage{
     font-size: 20px;
     color: #ef2929;
 }
+
 .resetBtn {
     background-color: #0038f3;
     color: #fff;
@@ -58,15 +65,19 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
 }
+
 .resetBtn:hover{
     background-color: red;
 }
+
 .weather-info{
     margin-top: 20px;
 }
+
 button:hover{
     background-color: #689ed7 ;
 }
+
 .randomizeBtn {
     background-color: #0038f3;
     color: #fff;
@@ -77,6 +88,7 @@ button:hover{
     margin-top: 10px;
     margin-left: 10px;
 }
+
 .randomizeBtn:hover {
     background-color: #2d7a00;
 }
