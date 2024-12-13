@@ -2,7 +2,7 @@ body {
     font-family: Helvetica;
     background-color: #d6eae7;
     background-image: url("./Assets/IMG_2271.jpeg");
-    background-size: 135%; /* Makes the background cover the entire element */
+    background-size: fill; /* Makes the background cover the entire element */
     background-repeat: no-repeat; /* Prevents the background from repeating */
     background-position: center; /* Centers the background image */
     
