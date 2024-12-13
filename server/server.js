@@ -1,6 +1,7 @@
 // server/server.js
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 import { setupCors } from './middleware/cors.middleware.js';
 import weatherSearchRoute from "./routes/weatherSearch.route.js";
