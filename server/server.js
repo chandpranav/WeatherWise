@@ -3,9 +3,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import { setupCors } from './middleware/cors.middleware.js';
-import weatherSearchRoute from "./routes/weatherSearchRoute.js";
-
-import dotenv from 'dotenv';
+import weatherSearchRoute from "./routes/weatherSearch.route.js";
+import userRoute from './routes/user.route.js';
 
 // Initialize express app
 const app = express();
@@ -28,8 +27,9 @@ const mongoConnect = async () => {
     }
 };
 
-//Define routes for weatherSearches
+// Define routes
 app.use("/weather", weatherSearchRoute);
+app.use("/user", userRoute);
 
 // Start the server and connect to the database
 const startServer = async () => {
