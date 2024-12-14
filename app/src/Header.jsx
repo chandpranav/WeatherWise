@@ -10,7 +10,7 @@ function Header() {
         <Link to="/" className="header-title">WeatherWise</Link>
       </h1>
       <nav>
-        <Link to="/signin" className="header-button">Sign In</Link>
+        <Link to="/signin" className="header-button">Log In</Link>
         <Link to="/signup" className="header-button">Sign Up</Link>
       </nav>
     </header>

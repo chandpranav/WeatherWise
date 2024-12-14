@@ -18,8 +18,10 @@ function WeatherApp() {
       return;
     }
 
-    // Call the backend instead of the OpenWeather API directly
-    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${user ? user.name : "guest"}`;
+    console.log(user?.user);
+
+    const username = user?.user || "guest";
+    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${username}`;
 
     try {
       const response = await fetch(url);

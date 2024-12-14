@@ -1,36 +1,35 @@
-/*
-UserContext.jsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-This file allows the use of a constant user throughout the app. It includes a mock sign-in and sign-out function.
-Scalable solution to users.
-*/
-
-import React, { createContext, useContext, useState } from 'react';
-
-// Create the UserContext and defaultUser
 const UserContext = createContext();
 
-// Create a provider component
 export const UserProvider = ({ children }) => {
-  // State to hold user information (null if not signed in)
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        // Retrieve user from localStorage on initial load
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : null;
+    });
 
-  // Mock sign-in function
-  const signIn = (username) => {
-    setUser({ user: username });
-  };
+    const signIn = (username) => {
+        console.log("Signing in with username", username);
+        const newUser = { user: username };
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser)); // Save to localStorage
+    };
 
-  // Sign-out function
-  const signOut = () => {
-    setUser(null);
-  };
+    const signOut = () => {
+        setUser(null);
+        localStorage.removeItem('user'); // Clear from localStorage
+    };
 
-  return (
-    <UserContext.Provider value={{ user, signIn, signOut }}>
-      {children}
-    </UserContext.Provider>
-  );
+    useEffect(() => {
+        console.log("User updated:", user);
+    }, [user]);
+
+    return (
+        <UserContext.Provider value={{ user, signIn, signOut }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
-// Export
 export const useUser = () => useContext(UserContext);

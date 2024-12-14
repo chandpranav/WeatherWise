@@ -1,24 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header'; 
+import SignUp from './SignUp';
+import LogIn from './LogIn';
 import WeatherApp from './WeatherApp'; 
+import { UserProvider } from './UserContext'; // Import the UserProvider
 import './styles/style.css';
-
-const SignIn = () => <div className="page">Sign In Page</div>;
-const SignUp = () => <div className="page">Sign Up Page</div>;
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<WeatherApp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
-    </Router>
+    <UserProvider> {/* Wrap the application in UserProvider */}
+      <Router>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/" element={<WeatherApp />} />
+            <Route path="/signin" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 

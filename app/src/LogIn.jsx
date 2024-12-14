@@ -1,17 +1,17 @@
 import React from 'react';
 import './styles/signin.css'
 
-function SignIn() {
+function LogIn() {
   return (
     <div>
-      <h2>Sign In</h2>
+      <h2>Log In</h2>
       <form>
         <input type="text" placeholder="Username" />
         <input type="password" placeholder="Password" />
-        <button type="submit">Sign In</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
 }
 
-export default SignIn;
+export default LogIn;
