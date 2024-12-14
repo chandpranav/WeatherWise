@@ -18,7 +18,9 @@ function SignUp() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ 
+                    user: username,
+                    password: password }),
             });
 
             if (response.ok) {
@@ -32,8 +34,6 @@ function SignUp() {
         } catch (error) {
             setErrorMessage("Failed to connect to the server.");
         }
-
-        console.log(user?.user);
     };
 
     return (

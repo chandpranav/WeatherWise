@@ -15,7 +15,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<WeatherApp />} />
-            <Route path="/signin" element={<LogIn />} />
+            <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
         </div>
