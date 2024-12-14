@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useUser } from "./UserContext"; // Import UserContext hook for managing user state
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./styles/login.css"; // Import the CSS file
 
 function Login() {
     const { signIn } = useUser(); // Get signIn function from context
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate(); // Hook to handle navigation
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -12,20 +14,22 @@ function Login() {
         const password = event.target.password.value;
 
         try {
-            const response = await fetch("http://localhost:5001/auth/login", {
+            const response = await fetch("http://localhost:5001/user/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ 
+                    user: username,
+                    password: password,
+                }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                signIn(data.username); // Update the user context
+                signIn(username); // Update the user context
                 setErrorMessage(""); // Clear any error messages
-                alert("Login successful!");
-                window.location.href = "/"; // Redirect to homepage
+                navigate("/"); // Redirect to the main page
             } else {
                 const errorData = await response.json();
                 setErrorMessage(errorData.message || "Invalid username or password");

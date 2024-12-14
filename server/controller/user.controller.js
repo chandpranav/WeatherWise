@@ -1,22 +1,94 @@
 import Router from "express";
 import User from "../model/user.js"; // Import the User model
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // Create a user
 const createUser = async (req, res) => {
   try {
-    console.log("creating a user")
-    const newUser = await User.create(req.body);
+    console.log("Creating a user");
+
+    const { user, password } = req.body;
+
+    // Validate input
+    if (!user || !password) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Username and password are required",
+      });
+    }
+
+    // Check if username already exists
+    const existingUser = await User.findOne({ user });
+    if (existingUser) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Username is already taken",
+      });
+    }
+
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Create the user with hashed password
+    const newUser = await User.create({
+      user,
+      password: hashedPassword,
+    });
+
+    // Return success response
     res.status(201).json({
       status: "success",
       data: {
-        user: newUser,
+        user: {
+          id: newUser._id,
+          user: newUser.user,
+        },
       },
     });
   } catch (err) {
-    res.status(400).json({
+    console.error("Error creating user:", err);
+    res.status(500).json({
       status: "fail",
-      message: err.message,
+      message: "Server error during user creation",
     });
+  }
+};
+
+// Login user
+const loginUser = async (req, res) => {
+  try {
+    console.log("Verifying password");
+
+    const { password } = req.body;
+    const user = req.user; // Retrieved from the middleware
+
+    // Verify password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user._id }, // Payload
+      process.env.JWT_SECRET || "yourSecretKey", // Secret key
+      { expiresIn: "1h" } // Token expiration
+    );
+
+    // Successful login: Return token and user data
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+      },
+    });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Server error during login" });
   }
 };
 
@@ -104,4 +176,4 @@ const deleteUserData = async (req, res) => {
 };
 
 // Export the functions
-export { createUser, getUserData, updateUserData, deleteUserData };
+export { createUser, getUserData, updateUserData, deleteUserData, loginUser };

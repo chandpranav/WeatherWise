@@ -20,7 +20,8 @@ function SignUp() {
                 },
                 body: JSON.stringify({ 
                     user: username,
-                    password: password }),
+                    password: password 
+                }),
             });
 
             if (response.ok) {
