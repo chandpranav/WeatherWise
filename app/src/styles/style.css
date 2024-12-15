@@ -92,3 +92,15 @@ button:hover{
 .randomizeBtn:hover {
     background-color: #2d7a00;
 }
+
+.star {
+    cursor: pointer;
+    margin-left: 8px;
+    color: gray;
+    font-size: 20px;
+  }
+  
+  .star.favorite {
+    color: gold;
+  }
+  

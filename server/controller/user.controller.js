@@ -1,4 +1,5 @@
 import Router from "express";
+import Favorite from "../model/favorite.js"
 import User from "../model/user.js"; // Import the User model
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -10,23 +11,6 @@ const createUser = async (req, res) => {
 
     const { user, password } = req.body;
 
-    // Validate input
-    if (!user || !password) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Username and password are required",
-      });
-    }
-
-    // Check if username already exists
-    const existingUser = await User.findOne({ user });
-    if (existingUser) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Username is already taken",
-      });
-    }
-
     // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -36,6 +20,9 @@ const createUser = async (req, res) => {
       user,
       password: hashedPassword,
     });
+
+    // Create the favorite object associated with the user
+    await Favorite.create({ user: newUser.user, favoriteLocation: "" });
 
     // Return success response
     res.status(201).json({
@@ -55,6 +42,7 @@ const createUser = async (req, res) => {
     });
   }
 };
+
 
 // Login user
 const loginUser = async (req, res) => {

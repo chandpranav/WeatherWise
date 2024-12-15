@@ -1,7 +1,6 @@
 import Search from "../model/search.js";
 import { fetchWeatherData } from "../services/weatherAPI.service.js";
-import { saveSearchToDatabase } from "../services/savesearch.service.js";
-import { getUserHistory } from "../services/getuserhistory.service.js";
+import { getUserHistory, saveSearchToDatabase } from "../services/weathersearch.service.js";
 
 // Get the last 10 searches
 export const getHistory = async (req, res) => {
