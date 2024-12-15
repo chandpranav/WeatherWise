@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from './UserContext'; // Import useUser hook to access user and signOut
 import './styles/header.css';
 
 function Header() {
     const { user, signOut } = useUser(); // Access user state and signOut function from context
+    const [dropdownOpen, setDropdownOpen] = useState(false); // State to handle dropdown visibility
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
+    const closeDropdown = () => {
+        setDropdownOpen(false);
+    };
 
     return (
         <header className="header">
@@ -16,7 +25,27 @@ function Header() {
                 {user ? ( // If a user is logged in
                     <div className="user-info">
                         <span>Hi, {user.user}!</span>
-                        <button className="header-button logout-button" onClick={signOut}>Log Out</button>
+                        <div className="dropdown-container">
+                            <button
+                                className="header-button dropdown-button"
+                                onClick={toggleDropdown}
+                            >
+                                Menu ▼
+                            </button>
+                            {dropdownOpen && (
+                                <div className="dropdown-menu">
+                                    <Link to="/account" className="dropdown-item" onClick={closeDropdown}>
+                                        Account
+                                    </Link>
+                                    <button className="dropdown-item logout-button" onClick={() => {
+                                        signOut();
+                                        closeDropdown();
+                                    }}>
+                                        Log Out
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 ) : ( // If no user is logged in
                     <>

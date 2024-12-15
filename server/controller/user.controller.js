@@ -80,70 +80,63 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Get user data by email
-const getUserData = async (req, res) => {
+const setFavoriteLocation = async (req, res) => {
+  const { user, favoriteLocation } = req.body;
+  console.log("Setting Favorite Location")
   try {
-    const email = req.params.email; // Use a more descriptive parameter name
-    const user = await User.findOne({ email });
-    
-    if (!user) {
-      return res.status(404).json({
-        status: "fail",
-        message: "User not found",
-      });
-    }
-    
-    res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
-
-// Update user data by email
-const updateUserData = async (req, res) => {
-  try {
-    const email = req.params.email; // Use a more descriptive parameter name
-    const updatedUser = await User.findOneAndUpdate(
-      { email },
-      req.body,
-      { new: true, runValidators: true } // `new: true` returns the updated document
+    //checkuser
+    const favorite = await Favorite.findOneAndUpdate(
+      { user }, // Match the user
+      { favoriteLocation }, // Update the favorite location
+      { upsert: true, new: true } // Create if it doesn't exist, and return updated document
     );
-
-    if (!updatedUser) {
-      return res.status(404).json({
-        status: "fail",
-        message: "User not found",
-      });
-    }
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        user: updatedUser,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-    });
+    res.status(200).json({ message: "Favorite location updated", favorite });
+  } catch (error) {
+    console.error("Error setting favorite location:", error);
+    res.status(500).json({ message: "Failed to update favorite location" });
   }
 };
 
-// Delete user data by username
+const getFavoriteLocation = async (req, res) => {
+  const { user } = req.query; // Assuming `user` is passed as a query parameter
+  console.log('Getting favorite location')
+  try {
+    //Checkuser
+
+    // Find the favorite location for the user
+    const favorite = await Favorite.findOne({ user });
+
+    // If no favorite is found, return null
+    if (!favorite || !favorite.favoriteLocation) {
+      return res.status(200).json({ favoriteLocation: null });
+    }
+
+    // Return the favorite location
+    res.status(200).json({ favoriteLocation: favorite.favoriteLocation });
+  } catch (error) {
+    console.error("Error fetching favorite location:", error);
+    res.status(500).json({ message: "Failed to fetch favorite location." });
+  }
+};
+
 const deleteUserData = async (req, res) => {
   try {
-    const user = req.params.user; // Use a more descriptive parameter name
-    const deletedUser = await User.findOneAndDelete({ user });
+    const user = req.body.user; // Fetch the user from the request body
+    console.log(`Deleting data for user: ${user}`);
 
+    // Ensure `user` exists
+    if (!user) {
+      return res.status(400).json({
+        status: "fail",
+        message: "User identifier is required",
+      });
+    }
+
+    // Delete User and Favorite atomically
+    const deletedUser = await User.findOneAndDelete({ user: user });
+    const deletedFavorite = await Favorite.findOneAndDelete({ user: user });
+
+    // Check if the user was found
     if (!deletedUser) {
       return res.status(404).json({
         status: "fail",
@@ -151,17 +144,23 @@ const deleteUserData = async (req, res) => {
       });
     }
 
-    res.status(204).json({
+    // Response for successful deletion
+    res.status(200).json({
       status: "success",
-      data: null,
+      message: "User and associated data deleted successfully",
+      data: { deletedUser, deletedFavorite },
     });
   } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
+    console.error("Error deleting user:", err);
+
+    // Handle unexpected errors
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while deleting user data",
+      error: err.message,
     });
   }
 };
 
 // Export the functions
-export { createUser, getUserData, updateUserData, deleteUserData, loginUser };
+export { createUser, loginUser, setFavoriteLocation, getFavoriteLocation, deleteUserData };
