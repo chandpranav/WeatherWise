@@ -16,7 +16,7 @@ function Account() {
 
   const fetchFavoriteLocation = async () => {
     if (!user) return;
-    console.log(user.user);
+    console.log(`Getting favorite location for ${user.user}`);
     try {
       const response = await fetch(`http://localhost:5001/user/getfavorite?user=${user.user}`);
       const data = await response.json();
