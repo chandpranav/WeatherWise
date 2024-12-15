@@ -93,14 +93,19 @@ button:hover{
     background-color: #2d7a00;
 }
 
-.star {
-    cursor: pointer;
-    margin-left: 8px;
-    color: gray;
-    font-size: 20px;
-  }
-  
-  .star.favorite {
-    color: gold;
-  }
+.favoriteBtn {
+    background-color: #0038f3; /* Default background color */
+    color: #fff; /* Text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Padding for the button */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 10px; /* Space above the button */
+}
+
+.favoriteBtn:hover {
+    background-color: #fff8a9; /* Light yellow color on hover */
+    color: #000; /* Change text color for contrast */
+}
+
   

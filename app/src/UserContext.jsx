@@ -14,26 +14,12 @@ export const UserProvider = ({ children }) => {
         return savedFavorite || null;
     });
 
-    const signIn = (username) => {
-        console.log("Signing in with username", username);
-        const newUser = { user: username };
-        setUser(newUser);
-        localStorage.setItem('user', JSON.stringify(newUser)); // Save user to localStorage
-        fetchFavoriteLocation(username); // Fetch and set favorite location
-    };
-
-    const signOut = () => {
-        setUser(null);
-        setFavoriteLocation(null); // Clear favorite location
-        localStorage.removeItem('user'); // Clear user from localStorage
-        localStorage.removeItem('favoriteLocation'); // Clear favorite location from localStorage
-    };
-
+    // Fetch favorite location from backend and update state
     const fetchFavoriteLocation = async (username) => {
         try {
-          console.log(username)
             const response = await fetch(`http://localhost:5001/user/getfavorite?user=${username}`);
             const data = await response.json();
+
             if (data.favoriteLocation) {
                 setFavoriteLocation(data.favoriteLocation);
                 localStorage.setItem('favoriteLocation', data.favoriteLocation); // Save to localStorage
@@ -46,6 +32,7 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+    // Update favorite location in backend and state
     const updateFavoriteLocation = async (username, newFavorite) => {
         try {
             const response = await fetch(`http://localhost:5001/user/setfavorite`, {
@@ -53,19 +40,45 @@ export const UserProvider = ({ children }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user: username, favoriteLocation: newFavorite }),
             });
+
             if (response.ok) {
                 setFavoriteLocation(newFavorite);
                 localStorage.setItem('favoriteLocation', newFavorite); // Update localStorage
+            } else {
+                console.error("Failed to update favorite location on the backend.");
             }
         } catch (error) {
             console.error("Error updating favorite location:", error);
         }
     };
 
+    // Sign in the user and fetch their favorite location
+    const signIn = async (username) => {
+        console.log("Signing in with username:", username);
+        const newUser = { user: username };
+
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser)); // Save user to localStorage
+
+        // Fetch favorite location after signing in
+        await fetchFavoriteLocation(username);
+    };
+
+    // Sign out the user and clear their data
+    const signOut = () => {
+        setUser(null);
+        setFavoriteLocation(null);
+
+        localStorage.removeItem('user'); // Clear user from localStorage
+        localStorage.removeItem('favoriteLocation'); // Clear favorite location from localStorage
+    };
+
+    // Effect to log changes to user
     useEffect(() => {
         console.log("User updated:", user);
     }, [user]);
 
+    // Effect to log changes to favorite location
     useEffect(() => {
         console.log("Favorite location updated:", favoriteLocation);
     }, [favoriteLocation]);

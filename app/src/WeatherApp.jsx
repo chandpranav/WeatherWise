@@ -5,13 +5,15 @@ import './styles/style.css';
 const cities = ['Los Angeles', 'Moscow', 'London', 'Hanoi', 'Beijing', 'Seoul', 'Osaka', 'Tokyo', 'Kyoto', 'Sydney', 'New York', 'Singapore'];
 
 function WeatherApp() {
-  const { user } = useUser(); // Access user
+  const { user, favoriteLocation } = useUser(); // Access user and favoriteLocation
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState('');
 
   const fetchWeather = async (city) => {
     const query = city || location;
+
+    console.log(user)
 
     if (!query) {
       setError('Please enter a valid location');
@@ -64,6 +66,13 @@ function WeatherApp() {
     fetchWeather(randomCity);
   };
 
+  // Fetch weather for the user's favorite location
+  const fetchFavoriteWeather = () => {
+    if (favoriteLocation) {
+      fetchWeather(favoriteLocation);
+    }
+  };
+
   return (
     <div className="container">
       <h1>WeatherWise</h1>
@@ -78,6 +87,12 @@ function WeatherApp() {
       <button className="resetBtn" onClick={resetWeather}>Reset</button>
       <button onClick={() => fetchWeather()}>Search</button>
       <button className="randomizeBtn" onClick={fetchRandomWeather}>Randomize</button>
+      {/* Add a button to search favorite location if user is signed in and favoriteLocation exists */}
+      {user && favoriteLocation && (
+        <button className="favoriteBtn" onClick={fetchFavoriteWeather}>
+          Favorite Location: {favoriteLocation || "None"}
+        </button>
+      )}
       <p className="errorMessage">{error}</p>
       {weatherData && (
         <div className="weather-info">

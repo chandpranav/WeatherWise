@@ -3,49 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 
 function Account() {
-  const { user, signOut } = useUser(); // Access user and signOut function
+  const { user, favoriteLocation, updateFavoriteLocation, signOut } = useUser();
   const navigate = useNavigate();
-  const [favoriteLocation, setFavoriteLocation] = useState('');
   const [locationInput, setLocationInput] = useState('');
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    fetchFavoriteLocation();
-  }, []);
-
-  const fetchFavoriteLocation = async () => {
-    if (!user) return;
-    console.log(`Getting favorite location for ${user.user}`);
-    try {
-      const response = await fetch(`http://localhost:5001/user/getfavorite?user=${user.user}`);
-      const data = await response.json();
-      setFavoriteLocation(data.favoriteLocation || 'None');
-    } catch (error) {
-      console.error("Error fetching favorite location:", error);
-      setErrorMessage('Failed to load favorite location.');
+    if (favoriteLocation) {
+      setLocationInput(favoriteLocation); // Prefill input with the current favorite location
     }
-  };
+  }, [favoriteLocation]);
 
-  const updateFavoriteLocation = async () => {
+  const handleUpdateFavoriteLocation = async () => {
     if (!locationInput) {
       setErrorMessage('Please enter a valid location.');
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5001/user/setfavorite`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: user.user, favoriteLocation: locationInput }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setFavoriteLocation(data.favorite?.favoriteLocation || locationInput);
-        setMessage('Favorite location updated successfully!');
-        setErrorMessage('');
-      } else {
-        setErrorMessage('Failed to update favorite location.');
-      }
+      await updateFavoriteLocation(user.user, locationInput); // Call context method
+      setMessage('Favorite location updated successfully!');
+      setErrorMessage('');
     } catch (error) {
       console.error("Error updating favorite location:", error);
       setErrorMessage('Failed to update favorite location.');
@@ -55,8 +33,8 @@ function Account() {
   const deleteAccount = async () => {
     if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
     try {
-        console.log(`Deleteing account for ${user.user}`)
-        const response = await fetch(`http://localhost:5001/user/delete`, {
+      console.log(`Deleting account for ${user.user}`);
+      const response = await fetch(`http://localhost:5001/user/delete`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user.user }),
@@ -80,14 +58,14 @@ function Account() {
         <>
           <h3>Welcome, {user.user}!</h3>
           <div>
-            <p>Current Favorite Location: <strong>{favoriteLocation}</strong></p>
+            <p>Current Favorite Location: <strong>{favoriteLocation || 'None'}</strong></p>
             <input
               type="text"
               placeholder="Enter a new favorite location"
               value={locationInput}
               onChange={(e) => setLocationInput(e.target.value)}
             />
-            <button onClick={updateFavoriteLocation}>Set Favorite</button>
+            <button onClick={handleUpdateFavoriteLocation}>Set Favorite</button>
           </div>
           <button onClick={deleteAccount} style={{ backgroundColor: '#ef2929', marginTop: '15px' }}>
             Delete Account
