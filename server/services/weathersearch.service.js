@@ -5,7 +5,7 @@ export async function getUserHistory(user) {
         const searches = await Search.find({ user: "Diego" })
             .sort({ timestamp: -1 }) // Sort by most recent
             .limit(10) // Get the last 10 searches
-            .select("user location timestamp"); // Only include these fields
+            .select("location timestamp"); // Only include these fields
         return searches;
     } catch (err) {
         console.error('Failed to fetch searches:', err);

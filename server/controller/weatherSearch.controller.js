@@ -5,7 +5,7 @@ import { getUserHistory, saveSearchToDatabase } from "../services/weathersearch.
 // Get the last 10 searches
 export const getHistory = async (req, res) => {
     const user = req.query.user;
-
+    console.log(user)
     const history = await getUserHistory(user);
     console.log(`History for ${user} fetched: `, history);
     res.json(history);

@@ -95,17 +95,34 @@ button:hover{
 
 .favoriteBtn {
     background-color: #0038f3; /* Default background color */
-    color: #fff; /* Text color */
-    border: none; /* Remove border */
-    padding: 10px 20px; /* Padding for the button */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    margin-top: 10px; /* Space above the button */
+    margin-bottom: 10px; /* Add space below the Favorite Location button */
+    color: #fff; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-top: 10px; 
 }
 
 .favoriteBtn:hover {
-    background-color: #fff8a9; /* Light yellow color on hover */
-    color: #000; /* Change text color for contrast */
+    background-color: #fff8a9; 
+    color: #000; 
 }
 
-  
+
+.historyBtn {
+    background-color: #0038f3;
+    margin-left: 10px;
+    margin-top: 0; /* Ensure it aligns with the Favorite Location button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.historyBtn:hover {
+    background-color: white; 
+    color: black; 
+}

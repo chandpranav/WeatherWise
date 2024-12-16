@@ -9,18 +9,22 @@ function WeatherApp() {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState('');
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [historyMessage, setHistoryMessage] = useState('');
+
+  const clearHistory = () => {
+    setSearchHistory([]); // Clear the search history
+    setHistoryMessage(''); // Clear any history message
+  };
 
   const fetchWeather = async (city) => {
+    clearHistory(); // Clear history when fetching new weather
     const query = city || location;
-
-    console.log(user)
 
     if (!query) {
       setError('Please enter a valid location');
       return;
     }
-
-    console.log(user?.user);
 
     const username = user?.user || "guest";
     const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${username}`;
@@ -46,30 +50,52 @@ function WeatherApp() {
     }
   };
 
-  // Reset weather data
   const resetWeather = () => {
+    clearHistory(); // Clear history when resetting
     setLocation('');
     setWeatherData(null);
     setError('');
   };
 
-  // Handle Enter key press
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       fetchWeather();
     }
   };
 
-  // Fetch weather for a random city from the cities array
   const fetchRandomWeather = () => {
+    clearHistory(); // Clear history when fetching random weather
     const randomCity = cities[Math.floor(Math.random() * cities.length)];
     fetchWeather(randomCity);
   };
 
-  // Fetch weather for the user's favorite location
   const fetchFavoriteWeather = () => {
+    clearHistory(); // Clear history when fetching favorite location weather
     if (favoriteLocation) {
       fetchWeather(favoriteLocation);
+    }
+  };
+
+  const fetchUserHistory = async () => {
+    if (!user) {
+      setHistoryMessage('Please log in to view search history.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5001/weather/api/history?user=${user.user}`);
+      const data = await response.json();
+
+      if (data.length > 0) {
+        setSearchHistory(data); // Store the search history
+        setHistoryMessage(''); // Clear any previous message
+      } else {
+        setSearchHistory([]);
+        setHistoryMessage('No previous searches found.');
+      }
+    } catch (error) {
+      console.error('Error fetching search history:', error);
+      setHistoryMessage('Failed to fetch search history. Please try again later.');
     }
   };
 
@@ -87,12 +113,21 @@ function WeatherApp() {
       <button className="resetBtn" onClick={resetWeather}>Reset</button>
       <button onClick={() => fetchWeather()}>Search</button>
       <button className="randomizeBtn" onClick={fetchRandomWeather}>Randomize</button>
-      {/* Add a button to search favorite location if user is signed in and favoriteLocation exists */}
+
+      {/* Display Favorite Location button */}
       {user && favoriteLocation && (
         <button className="favoriteBtn" onClick={fetchFavoriteWeather}>
           Favorite Location: {favoriteLocation || "None"}
         </button>
       )}
+
+      {/* Place the View Search History button below Favorite Location */}
+      {user && (
+        <button className="historyBtn" onClick={fetchUserHistory}>
+          View Search History
+        </button>
+      )}
+
       <p className="errorMessage">{error}</p>
       {weatherData && (
         <div className="weather-info">
@@ -100,6 +135,16 @@ function WeatherApp() {
           <p>{weatherData.temperature}</p>
           <p>{weatherData.description}</p>
         </div>
+      )}
+      {historyMessage && <p className="errorMessage">{historyMessage}</p>}
+      {searchHistory.length > 0 && (
+        <ul className="historyList">
+          {searchHistory.map((search, index) => (
+            <li key={index}>
+              {search.location} - {new Date(search.timestamp).toLocaleString()}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
