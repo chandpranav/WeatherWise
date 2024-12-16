@@ -2,7 +2,7 @@ import Search from '../model/search.js'
 
 export async function getUserHistory(user) {    
     try {
-        const searches = await Search.find({ user: "Diego" })
+        const searches = await Search.find({ user: user })
             .sort({ timestamp: -1 }) // Sort by most recent
             .limit(10) // Get the last 10 searches
             .select("location timestamp"); // Only include these fields
