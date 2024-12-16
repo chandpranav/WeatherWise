@@ -19,7 +19,7 @@ function Header() {
         <header className="header">
             {/* Add a Link to the default page */}
             <h1>
-                <Link to="/" className="header-title">WeatherWise</Link>
+                <Link to="/" id="title" className="header-title">WeatherWise</Link>
             </h1>
             <nav>
                 {user ? ( // If a user is logged in

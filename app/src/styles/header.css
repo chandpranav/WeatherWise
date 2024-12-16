@@ -1,8 +1,15 @@
+@font-face {
+  font-family: "Nexa";
+  src: url("../assets/Nexa-Heavy.ttf");
+  font-weight: 20;
+  font-style: normal;
+}
+
 /* Reset margins and padding */
 html, body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif; /* Use a clean default font */
+  font-family: Nexa;
   box-sizing: border-box;
 }
 
@@ -46,12 +53,14 @@ html, body {
 }
 
 .header-button {
+  font-family: Nexa;
   text-decoration: none;
   color: white;
   padding: 0.5rem 1rem;
   border: 1px solid white;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
+  margin: 10px;
 }
 
 .header-button:hover {

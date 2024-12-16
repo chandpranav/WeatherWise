@@ -61,11 +61,10 @@ function SignUp() {
                 </>
             ) : (
                 <div className="successMessage">
-                    <p>
-                        Sign up successful! 🎉 You are now signed in as {user?.user || "Guest"}.
-                    </p>
+                    <p>Sign up successful! 🎉</p>
+                    <p>You are now signed in as {user?.user || "Guest"}.</p>
                     <button onClick={() => (window.location.href = "/")}>
-                        Return to Main
+                        Return to Home
                     </button>
                 </div>
             )}

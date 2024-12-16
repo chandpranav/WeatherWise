@@ -1,13 +1,30 @@
-body {
-    font-family: Helvetica;
-    background-color: #d6eae7;
-    background-image: url("../assets/IMG_2271.jpeg");
-    background-size: fill;
-    background-repeat: no-repeat; 
-    background-position: center; 
-    height: 100%;
-    
+@font-face {
+    font-family: "Nexa";
+    src: url("../assets/Nexa-Heavy.ttf");
+    font-weight: 20;
+    font-style: normal;
 }
+
+@font-face {
+    font-family: "Mufist";
+    src: url("../assets/Mufist-Variable03.otf");
+    font-weight: 20;
+    font-style: normal;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    font-family: Nexa;
+    background-color: #d6eae7;
+    background-image: url("../assets/landscape.jpg");
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
 .container{
     max-width: 400px;
     max-height: 600px;
@@ -39,7 +56,9 @@ input[type="text"] {
 }
 
 button {
-    background-color: #0039f3;
+    font-family: Nexa;
+    font-size: medium;
+    background-color: #318be6;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -48,7 +67,7 @@ button {
 }
 
 button:hover {
-    background-color: #689ed7;
+    background-color: #5fb0c4;
 }
 
 .errorMessage{
@@ -57,7 +76,7 @@ button:hover {
 }
 
 .resetBtn {
-    background-color: #0038f3;
+    background-color: #318be6;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -70,16 +89,38 @@ button:hover {
     background-color: red;
 }
 
+#title {
+    font-family: Mufist;
+    font-size: 35px;
+}
+
 .weather-info{
     margin-top: 20px;
 }
 
-button:hover{
-    background-color: #689ed7 ;
+#location {
+    font-size: 30px;
+}
+
+#temperature {
+    font-size: 30px;
+    font-weight: bolder;
+    margin: 10px;
+}
+
+#weatherDesc {
+    font-size: 20px;
+    margin: 10px;
+}
+
+#weatherImg {
+    width: 70px;
+    height: 70px;
+    margin: -20px;
 }
 
 .randomizeBtn {
-    background-color: #0038f3;
+    background-color: #318be6;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -94,7 +135,7 @@ button:hover{
 }
 
 .favoriteBtn {
-    background-color: #0038f3; /* Default background color */
+    background-color: #318be6; /* Default background color */
     margin-bottom: 10px; /* Add space below the Favorite Location button */
     color: #fff; 
     border: none; 
@@ -109,9 +150,8 @@ button:hover{
     color: #000; 
 }
 
-
 .historyBtn {
-    background-color: #0038f3;
+    background-color: #318be6;
     margin-left: 10px;
     margin-top: 0; /* Ensure it aligns with the Favorite Location button */
     color: white;
@@ -123,6 +163,9 @@ button:hover{
 }
 
 .historyBtn:hover {
-    background-color: white; 
-    color: black; 
+    background-color: #b873f0;
+}
+
+input {
+    font-family: Nexa;
 }

@@ -102,7 +102,7 @@ function WeatherApp() {
 
   return (
     <div className="container">
-      <h1>WeatherWise</h1>
+      <h1 id="title">WeatherWise</h1>
       <input
         type="text"
         id="locationInput"
@@ -132,10 +132,10 @@ function WeatherApp() {
       <p className="errorMessage">{error}</p>
       {weatherData && (
         <div className="weather-info">
-          <h2>{weatherData.name}</h2>
-          <p>{weatherData.temperature}</p>
-          <img src={`http://openweathermap.org/img/w/${weatherData.icon}.png`} />
-          <p>{weatherData.description}</p>
+          <h2 id="location">{weatherData.name}</h2>
+          <img id="weatherImg" src={`http://openweathermap.org/img/w/${weatherData.icon}.png`} />
+          <p id="temperature">{weatherData.temperature}</p>
+          <p id="weatherDesc">{weatherData.description}</p>
         </div>
       )}
       {historyMessage && <p className="errorMessage">{historyMessage}</p>}
