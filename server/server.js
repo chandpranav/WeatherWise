@@ -49,7 +49,7 @@ app.use("/user", userRoute);
 // Start the server and connect to the database
 const startServer = async () => {
   await mongoConnect(); // Connect to MongoDB
-  const PORT = process.env.PORT || 5001; 
+  const PORT = process.env.PORT || 5002; 
   app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
   });

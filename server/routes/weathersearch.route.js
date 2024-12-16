@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getHistory,
   getWeather,
-} from "../controller/weatherSearch.controller.js"; // Import controller functions
+} from "../controller/weathersearch.controller.js"; // Import controller functions
 
 const weatherSearchRoute = Router();
 
