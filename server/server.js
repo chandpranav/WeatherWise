@@ -6,7 +6,7 @@ import cron from 'node-cron';
 
 import { setupCors } from './middleware/cors.middleware.js';
 import { deleteOldSearches } from './services/cleanup.service.js';
-import weatherSearchRoute from "./routes/weatherSearch.route.js";
+import weatherSearchRoute from "./routes/weathersearch.route.js";
 import userRoute from './routes/user.route.js';
 
 // Initialize express app
