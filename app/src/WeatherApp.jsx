@@ -42,6 +42,7 @@ function WeatherApp() {
           name: data.name,
           temperature: `${Math.round(celsius)}°C / ${Math.round(fahrenheit)}°F`,
           description: data.description,
+          icon: data.icon,
         });
         setError(''); // Clear any previous error
       }
@@ -133,6 +134,7 @@ function WeatherApp() {
         <div className="weather-info">
           <h2>{weatherData.name}</h2>
           <p>{weatherData.temperature}</p>
+          <img src={`http://openweathermap.org/img/w/${weatherData.icon}.png`} />
           <p>{weatherData.description}</p>
         </div>
       )}
