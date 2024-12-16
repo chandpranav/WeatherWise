@@ -22,6 +22,7 @@ export async function fetchWeatherData(location) {
           temperatureC: data.main.temp,
           temperatureF: (data.main.temp * 9) / 5 + 32,
           description: data.weather[0].description,
+          icon: data.weather[0].icon,
         };
       } else {
         throw new Error('Location not found');

@@ -7,7 +7,8 @@ const SearchSchema = new Schema({
     timestamp: { type: Date, default: Date.now },
     temperatureC: { type: Number, required: true }, 
     temperatureF: { type: Number, required: true }, 
-    description: { type: String}
+    description: { type: String },
+    icon: { type: String }
 });
 
 const Search = model("Search", SearchSchema);

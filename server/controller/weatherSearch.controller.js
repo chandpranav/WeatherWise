@@ -28,7 +28,8 @@ export const getWeather = async (req, res) => {
             query, 
             Math.round(weatherData.temperatureC),
             Math.round(weatherData.temperatureF),
-            weatherData.description
+            weatherData.description,
+            weatherData.icon
         ).catch(err => {
             console.error('Error saving search to database:', err);
         });

@@ -12,9 +12,9 @@ export async function getUserHistory(user) {
     }
 }
 
-export async function saveSearchToDatabase(user, location, temperatureC, temperatureF, description) {
+export async function saveSearchToDatabase(user, location, temperatureC, temperatureF, description, icon) {
     try {
-        const search = new Search({user, location, temperatureC, temperatureF, description });
+        const search = new Search({user, location, temperatureC, temperatureF, description, icon });
         await search.save();    // save is a mongoose method
         console.log('Search saved:', search);
         return { message: "Search saved!"};
