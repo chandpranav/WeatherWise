@@ -30,6 +30,6 @@
   "description": "Simple Front End for Weather Wise",
   "main": "eslint.config.js",
   "keywords": [],
-  "author": "Peter Tran",
+  "author": "Peter Tran, Diego Vela, Brenda Pham",
   "license": "ISC"
 }
