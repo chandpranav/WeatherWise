@@ -13,11 +13,12 @@ WeatherWise is a user-friendly weather application built with Node.js and React.
 ## Technologies Used
 - **Node.js**: Backend server
 - **Express**: Web framework for building the API
-- **Axios**: For making API requests
 - **React**: Frontend library for building the user interface
 - **OpenWeatherMap API**: Source for weather data
+- **MongoDB**: Database for storing user and search data
 
 
 ## FrontEnd
 - A simple UI that lets user do a search on a location's weather of their choosing 
-- Their searches are then saved to a local database which can be access by using MongoDB
+- Their searches are then saved to a local database which can be accessed by using MongoDB
+- Users may save a favorite location for easy lookup and view their search history
