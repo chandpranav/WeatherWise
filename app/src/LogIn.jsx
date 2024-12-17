@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUser } from "./UserContext"; // Import UserContext hook for managing user state
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-import "./styles/login.css"; // Import the CSS file
+import "./styles/account.css"; // Import the CSS file
 
 function Login() {
     const { signIn } = useUser(); // Get signIn function from context

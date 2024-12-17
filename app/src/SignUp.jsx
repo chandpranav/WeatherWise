@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useUser } from "./UserContext"; // Import the UserContext hook
-import "./styles/signup.css";
+import "./styles/account.css";
 
 function SignUp() {
     const { signIn, user } = useUser(); // Always call hooks at the top level
