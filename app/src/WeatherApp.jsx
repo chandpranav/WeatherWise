@@ -3,6 +3,7 @@ import { useUser } from './UserContext'; // Import the custom hook
 import './styles/style.css';
 
 const cities = ['Los Angeles', 'Moscow', 'London', 'Hanoi', 'Beijing', 'Seoul', 'Osaka', 'Tokyo', 'Kyoto', 'Sydney', 'New York', 'Singapore'];
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function WeatherApp() {
   const { user, favoriteLocation } = useUser(); // Access user and favoriteLocation
@@ -27,7 +28,7 @@ function WeatherApp() {
     }
 
     const username = user?.user || "guest";
-    const url = `http://localhost:5001/weather/api/getweather?location=${query}&user=${username}`;
+    const url = `${BASE_URL}/weather/api/getweather?location=${query}&user=${username}`;
 
     try {
       const response = await fetch(url);
@@ -84,7 +85,7 @@ function WeatherApp() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/weather/api/history?user=${user.user}`);
+      const response = await fetch(`${BASE_URL}/weather/api/history?user=${user.user}`);
       const data = await response.json();
 
       if (data.length > 0) {

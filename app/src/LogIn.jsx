@@ -3,6 +3,8 @@ import { useUser } from "./UserContext"; // Import UserContext hook for managing
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./styles/account.css"; // Import the CSS file
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 function Login() {
     const { signIn } = useUser(); // Get signIn function from context
     const [errorMessage, setErrorMessage] = useState("");
@@ -14,7 +16,7 @@ function Login() {
         const password = event.target.password.value;
 
         try {
-            const response = await fetch("http://localhost:5001/user/login", {
+            const response = await fetch(`${BASE_URL}/user/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

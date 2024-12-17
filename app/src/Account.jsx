@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 function Account() {
   const { user, favoriteLocation, updateFavoriteLocation, signOut } = useUser();
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ function Account() {
     if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
     try {
       console.log(`Deleting account for ${user.user}`);
-      const response = await fetch(`http://localhost:5001/user/delete`, {
+      const response = await fetch(`${BASE_URL}/user/delete`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user.user }),

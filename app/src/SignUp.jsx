@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useUser } from "./UserContext"; // Import the UserContext hook
 import "./styles/account.css";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 function SignUp() {
     const { signIn, user } = useUser(); // Always call hooks at the top level
     const [errorMessage, setErrorMessage] = useState("");
@@ -13,7 +15,7 @@ function SignUp() {
         const password = event.target.password.value;
 
         try {
-            const response = await fetch("http://localhost:5001/user/", {
+            const response = await fetch(`${BASE_URL}/user/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

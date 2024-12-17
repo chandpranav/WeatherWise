@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const UserContext = createContext();
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
@@ -17,7 +18,7 @@ export const UserProvider = ({ children }) => {
     // Fetch favorite location from backend and update state
     const fetchFavoriteLocation = async (username) => {
         try {
-            const response = await fetch(`http://localhost:5001/user/getfavorite?user=${username}`);
+            const response = await fetch(`${BASE_URL}/user/getfavorite?user=${username}`);
             const data = await response.json();
 
             if (data.favoriteLocation) {
@@ -35,7 +36,7 @@ export const UserProvider = ({ children }) => {
     // Update favorite location in backend and state
     const updateFavoriteLocation = async (username, newFavorite) => {
         try {
-            const response = await fetch(`http://localhost:5001/user/setfavorite`, {
+            const response = await fetch(`${BASE_URL}/user/setfavorite`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user: username, favoriteLocation: newFavorite }),
